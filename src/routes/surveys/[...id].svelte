@@ -31,7 +31,11 @@
 
   Survey.StylesManager.applyTheme("modern");
 
-	export let surveyDataObject: Record<string, any>;
+	export let surveyDataObject: {
+    meta?: {
+      deadline?: number;
+    }
+  } & Record<string, any>;
 
   onMount(() => {
     const survey: SurveyModel = new Survey.Model(surveyDataObject, 'surveyContainer');
@@ -42,9 +46,13 @@
 
 <svelte:head>
 	<title>MCPE_PC Survey</title>
+  <meta name="og:title" content="MCPE_PC Survey">
 </svelte:head>
 
 <div>
-	<h1>MCPE_PC 설문조사</h1>
+	<h1>MCPE_PC 설문조사~!</h1>
+  {#if surveyDataObject.meta?.deadline}
+    <h3>마감: {new Date(surveyDataObject.meta.deadline).toLocaleDateString()}</h3>
+  {/if}
 	<div id="surveyContainer" style="background: #ffffff;"></div>
 </div>
