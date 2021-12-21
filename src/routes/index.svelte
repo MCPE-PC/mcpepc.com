@@ -6,7 +6,7 @@
 </svelte:head>
 
 <section>
-	<h1>
+	<h1 class="text-3xl font-bold underline">
 		안녕하십니까 형님들
 	</h1>
 </section>
