@@ -11,6 +11,21 @@
   <div class="max-w-xl mx-auto">
     <h1 class="font-bold text-center text-3xl my-4">데이웰에 지원하세요.</h1>
 
+    <h3 class="font-bold text-2xl mb-2">직접 입력해서 지원하기</h3>
+
+    <a
+      class="block bg-green-400 text-center rounded-lg py-1 mb-4"
+      href="/surveys/20230330-daywell"
+    >
+      정보 직접 입력하기
+    </a>
+
+    <div class="flex items-center mb-4">
+      <hr class="border-[1px] border-black grow" />
+      <p class="mx-4">또는</p>
+      <hr class="border-[1px] border-black grow" />
+    </div>
+
     <h3 class="font-bold text-2xl mb-2">🐝 베네듀 정보로 30초 지원하기</h3>
 
     <Recaptcha let:execute>
@@ -74,20 +89,10 @@
         </button>
 
         <div class="absolute inset-0 bg-black opacity-70" />
-        <p class="absolute inset-0 text-center text-white">🐝 베네듀 시스템 오류로 금일 점검 중입니다.</p>
+        <p class="absolute inset-0 text-center text-white">
+          🐝 베네듀 시스템 오류로 금일 점검 중입니다.
+        </p>
       </form>
     </Recaptcha>
-
-    <div class="flex items-center mb-4">
-      <hr class="border-[1px] border-black grow" />
-      <p class="mx-4">또는</p>
-      <hr class="border-[1px] border-black grow" />
-    </div>
-    <a
-      class="block bg-green-400 font-bold text-center text-2xl rounded-lg py-1 mb-4"
-      href="/surveys/20230330-daywell"
-    >
-      정보 직접 입력하기
-    </a>
   </div>
 </div>
