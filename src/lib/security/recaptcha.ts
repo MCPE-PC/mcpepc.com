@@ -1,26 +1,22 @@
 import {error} from '@sveltejs/kit';
 
 export async function validate(
+	fetch: WindowOrWorkerGlobalScope['fetch'],
+	responseToken: string,
 	{
-		platform,
-		fetch,
-		responseToken,
 		remoteIp,
 		requiredScore = 0.5,
 	}: {
-		platform: App.Platform;
-		fetch: WindowOrWorkerGlobalScope['fetch'];
-		responseToken: string;
 		remoteIp?: string;
 		requiredScore?: number;
-	},
+	} = {},
 ) {
 	const response = await fetch(
 		'https://www.google.com/recaptcha/api/siteverify',
 		{
 			method: 'POST',
 			body: new URLSearchParams({
-				secret: platform.env.RECAPTCHA_SECRET,
+				secret: import.meta.env.VITE_RECAPTCHA_SECRET,
 				response: responseToken,
 				...(remoteIp
 					? {

@@ -1,28 +1,40 @@
-/* import {json} from '@sveltejs/kit';
+import {error, json} from '@sveltejs/kit';
 import {load} from 'cheerio';
-import {RequestHandler} from './$types';
+import type {RequestHandler} from './$types';
 import {validate} from '$lib/security/recaptcha.js';
 
-export const POST = (async ({fetch, request, platform}) => {
+export const POST = (async ({fetch, request}) => {
 	const {email, password, recaptchaToken} = await request.json();
 
-	await validate({platform: platform!, fetch, responseToken: recaptchaToken});
+	await validate(fetch, recaptchaToken);
 
-	await fetch('https://www.benedu.co.kr/Home/Login', {
+	const loginResponse = await fetch('https://www.benedu.co.kr/Home/Login', {
 		method: 'POST',
-		body: new URLSearchParams({
-			__RequestVerificationToken: String(
-				load(await (await fetch('https://www.benedu.co.kr/')).text())(
-					'input[name="__RequestVerificationToken"]',
-				).val(),
-			),
-			loginRemember: 'false',
-			loginID: email,
-			loginPW: password,
-			loginGB: '2',
-		}),
+		body: new URLSearchParams([
+			[
+				'__RequestVerificationToken',
+				String(
+					load(
+						await (
+							await fetch('https://www.benedu.co.kr/', {credentials: 'include'})
+						).text(),
+					)('input[name="__RequestVerificationToken"]').val(),
+				),
+			],
+			['loginRemember', 'true'],
+			['loginRemember', 'false'],
+			['loginID', email],
+			['loginPW', password],
+			['loginGB', '2'],
+		]),
 		credentials: 'include',
+		redirect: 'manual',
 	});
+
+	if (!loginResponse.ok) {
+		console.log(loginResponse.url);
+		throw error(400, '로그인에 실패했습니다.');
+	}
 
 	const value = load(
 		await (
@@ -36,4 +48,3 @@ export const POST = (async ({fetch, request, platform}) => {
 
 	return json(value);
 }) satisfies RequestHandler;
-*/
